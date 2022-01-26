@@ -7,6 +7,7 @@ import java.io.IOException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 /**
@@ -15,7 +16,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
  */
 public class main {
 
-  // Deserializzare
+  // Deserializzare xml
   public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
     File file = new File("src/main/java/it/galli/classe.xml");// si indica il percorso del file
     XmlMapper xmlMapper = new XmlMapper();
@@ -28,14 +29,21 @@ public class main {
       System.out.println("-" + value.getStudenti().get(i).getCognome());
     }
     whenJavaSerializedToXmlStr_thenCorrect();
+    whenJavaSerializedToJsonStr_thenCorrect();
 
   }
 
-  // Serializza
+  // Serializza xml
   public static void whenJavaSerializedToXmlStr_thenCorrect() throws JsonProcessingException {
     XmlMapper xmlMapper = new XmlMapper();
     String xml = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(new root());
     System.out.println(xml);
   }
 
+  // Serializza Json
+  public static void whenJavaSerializedToJsonStr_thenCorrect() throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(new root());
+    System.out.println(json);
+  }
 }
